@@ -20,7 +20,7 @@ const LoginForm = () => {
     const [toastOpen, setToastOpen] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
     const [credentials, setCredentials] = useState({
-        email: '',
+        user:{},
         password: ''
     });
 
@@ -37,30 +37,44 @@ const LoginForm = () => {
         setToastOpen(false);
     };
 
-    const onType = (e :  any) => {
+    const onTypeEmail = (e :  any) => {
         // console.log("CREDENTIALS: ", credentials);
         setCredentials({
-            ...credentials,
-            [e.target.name]: e.target.value
+            password: credentials.password,
+            user: {
+                email: e.target.value
+            }
         })
     }
+
+    const onTypePass = (e :  any) => {
+        // console.log("CREDENTIALS: ", credentials);
+        setCredentials({
+            password: e.target.value,
+            user: credentials.user,
+        })
+    }
+
 
     const handleClick = async (e : any) => {
         e.preventDefault();
 
         try {
-            const response = await axios.post('/colaboradores/api/auth/login', credentials);
-            // console.log(response.status)
-            // console.log(response.data)
-            // response;
-            if(response.status === 200) {
+            console.log("CLICKED:", credentials);
+            const response = await axios.post('http://127.0.0.1:3000/auth/login', credentials);
+            console.log(response.status)
+            console.log(response.data)
+            // // response;
+            if(!!response.status && response.status === 200) {
                 // console.log("CAMBIANDO DE PAGINA")
                 router.push('/dashboard')
+                console.log("PUSHING");
             } else {
                 console.log("USUARIO O CONTRASEÑA INCORRECTOS");
                 setToastOpen(true);
             }
-        } catch(err) {
+        } 
+        catch(err) {
             setToastOpen(true);
             console.error("USUARIO O CONTRASEÑA INCORRECTOS");
             console.error("ERROR LOG: ", err);
@@ -80,7 +94,7 @@ const LoginForm = () => {
                         id="email" 
                         name="email"
                         label="Email"
-                        onChange={onType}
+                        onChange={onTypeEmail}
                         sx={{backgroundColor:'white', minWidth:{xs:'320px', sm:'360px', lg:'400px'}}}
                     />
                 </FormControl>
@@ -90,7 +104,7 @@ const LoginForm = () => {
                     <OutlinedInput
                         id="password"
                         name="password"
-                        onChange={onType}
+                        onChange={onTypePass}
                         sx={{backgroundColor:'white', minWidth:{xs:'320px', sm:'360px', lg:'400px'}}}
                         type={showPassword ? 'text' : 'password'}
                         endAdornment={

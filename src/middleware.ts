@@ -32,5 +32,5 @@ export async function middleware(request: NextRequest) {
 
 
 export const config = {
-    matcher: ['/', '/dashboard', '/colaboraciones/:path*', '/formulario', '/api/talk/:path*']
+    matcher: ['/',  '/colaboraciones/:path*', '/formulario', '/api/talk/:path*']
 } 
