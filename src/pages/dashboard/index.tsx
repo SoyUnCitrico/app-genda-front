@@ -21,8 +21,8 @@ const Dashboard = (props:DashboardType) => {
             // console.log(response.data);
             setUserAuth(response.data);
         }
-
         getProfile();
+        setCreatingUser(false)
     }, []);
 
     useEffect(()=> {
@@ -61,11 +61,11 @@ const Dashboard = (props:DashboardType) => {
             }}>
                 <Typography
                     marginTop={2}
-                    marginBottom={2}
-                    variant='h4'>
+                    marginBottom={1}
+                    variant='h6'>
                     {`Bienvenido`} 
                 </Typography>
-                <Typography variant='h4'>{` ${userAuth.username !== "" ? (userAuth.username) : "Usuario"}`}</Typography>
+                <Typography variant='h4' marginBottom={2}>{` ${userAuth.username !== "" ? (userAuth.username) : "Usuario"}`}</Typography>
                 <Typography><strong>Email: </strong>{userAuth.email}</Typography>
 
                 {loading ?
@@ -120,13 +120,13 @@ const Dashboard = (props:DashboardType) => {
                 </Grid>
 
                 {
-                    !!!creatingUser ? 
+                    creatingUser === true ? 
                     <NewContact/> : <></>
                 }
                 <Box sx={{
                     // background:'red',
                     
-                    position: creatingUser?'absolute':'relative',
+                    position: !creatingUser?'absolute':'relative',
                     bottom:'20px',
                     left:'0',
                     width:'100%',
@@ -137,13 +137,13 @@ const Dashboard = (props:DashboardType) => {
                 }}>
                     <Button variant='contained' 
                         onClick={()=>{setCreatingUser(!creatingUser)}}
-                        color={creatingUser?'primary':'error'}
+                        color={!creatingUser?'primary':'error'}
                         sx={{
                         fontWeight:'900', 
                         fontSize:'1.8rem', 
                         borderRadius:'50%',
                         padding:'0.5rem',
-                        transform:!creatingUser?'rotate(45deg)':''
+                        transform:creatingUser?'rotate(45deg)':'',
                         }}
                     >{' + '}</Button>
                 </Box>
@@ -160,24 +160,6 @@ const initUser = () : AuthUser => {
         tokenKeystone: ""
     }
 }
-// import profileHandler from '../api/auth/profile';
-// export const getServerSideProps = async() => {
-
-//     let user = initUser();
-//     try {
-//         const response = await axios.get('/colaboradores/api/auth/profile');
-//         user = response?.data && response?.data;
-//     } catch(err) {
-//         console.error(err);
-//     }
-    
-//     console.log("USUARIO: ", user);
-//     return {
-//       props: {
-//             user: user
-//         }
-//     }
-// }
   
 
 export default Dashboard;

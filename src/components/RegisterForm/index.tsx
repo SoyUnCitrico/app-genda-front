@@ -59,18 +59,18 @@ const RegisterForm = () => {
 
     const handleClick = async (e : any) => {
         e.preventDefault();
-        // console.log(credentials)
+        console.log(credentials)
         try {
             // console.log("CLICKED:", credentials);
             const response = await axios.post(`/api/auth/register`, credentials);
-            console.log(response)
-            if(!!response.status && response.status === 200) {
+            // console.log(response)
+            if(response.status === 200) {
                 // console.log("CAMBIANDO DE PAGINA")
                 if(response.data === 'Ya existe el usuario'){
                     setToastOpen(true);
                 } else {
-                    // router.push('/login')
-                    console.log("PUSHING");
+                    router.push('/login')
+                    // console.log("PUSHING");
                 }
             } else {
                 console.log("YA EXISTEN LOS DATOS");
@@ -92,7 +92,7 @@ const RegisterForm = () => {
             <Toast isOpen={toastOpen} message={'Datos ya existen'} handleClose={handleToastClose}/>
             <FormGroup sx={{display:'grid', placeContent:'center'}}>
                 <FormControl required sx={{margin: '1rem 0'}}>
-                    <InputLabel htmlFor="name">Name</InputLabel>
+                    <InputLabel htmlFor="name">Nombre</InputLabel>
                     <OutlinedInput 
                         id="name" 
                         name="name"
@@ -113,7 +113,7 @@ const RegisterForm = () => {
                 </FormControl>
 
                 <FormControl required variant="outlined" sx={{margin: '1rem 0'}}>
-                    <InputLabel htmlFor="password">Password</InputLabel>
+                    <InputLabel htmlFor="password">Contraseña</InputLabel>
                     <OutlinedInput
                         id="password"
                         name="password"

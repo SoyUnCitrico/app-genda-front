@@ -3,10 +3,11 @@ import { extendedJWT } from '@/utils/types';
 const extendUse = (verifiedToken : any, token: string): extendedJWT => {
     const original = verify(verifiedToken, token);
     if(typeof original === 'object') {
+        
         return { 
             ...original,
             email: original.email ? original.email : '',
-            username: original.name ? original.name : '',
+            username: original.username ? original.username : '',
             id: original.id ? original.id : '',
             tokenKeystone: original.tokenKeystone ? original.tokenKeystone : '',
         }

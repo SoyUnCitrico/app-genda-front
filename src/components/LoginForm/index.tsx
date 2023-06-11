@@ -59,20 +59,18 @@ const LoginForm = () => {
 
     const handleClick = async (e : any) => {
         e.preventDefault();
-
         try {
-            // console.log("CLICKED:", credentials);
-            // const response = await axios.post(`${uri}/auth/login`, credentials);
             const response = await axios.post(`/api/auth/login`, credentials);
 
-            if(!!response.status && response.status === 200) {
+            if(response.status === 200) {
                 // console.log("CAMBIANDO DE PAGINA")
-                // if(response.data === 'El usuario no se ha encontrado con los datos de tu busqueda'){
-                //     setToastOpen(true);
-                // } else {
+                if(response.data === 'Datos incorrectos'){
+                    setToastOpen(true);
+                } else {
                     router.push('/dashboard')
-                    console.log("PUSHING");
-                // }
+                    // console.log("PUSHING");
+                    // console.log(response.data);
+                }
             } else {
                 console.log("USUARIO O CONTRASEÑA INCORRECTOS");
                 setToastOpen(true);
@@ -104,7 +102,7 @@ const LoginForm = () => {
                 </FormControl>
 
                 <FormControl required variant="outlined" sx={{margin: '1rem 0'}}>
-                    <InputLabel htmlFor="password">Password</InputLabel>
+                    <InputLabel htmlFor="password">Contraseña</InputLabel>
                     <OutlinedInput
                         id="password"
                         name="password"

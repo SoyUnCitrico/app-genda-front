@@ -3,8 +3,6 @@ import Grid from '@mui/material/Grid';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import Link from 'next/link';
-
-import { getCookie } from 'cookies-next';
 const Register = () => {
     // console.log("cookies", getCookie('tokenAuthSerial'))
     return (
