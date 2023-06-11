@@ -4,14 +4,13 @@ import axios from 'axios';
 const API_URL = process.env.API_URL || "";
 const TOKEN_SECRET = process.env.TOKEN_SECRET || "";
 
-export default async function dashboardHandler (req: any, res:any) {
+export default async function manyContactsHandler (req: any, res:any) {
 
     const { tokenAuthSerial} = req.cookies; 
     if(!tokenAuthSerial) {
         return res.status(401).json({error: 'No token'})
     }
 
-    
     try {
         const user = extendUse(tokenAuthSerial, TOKEN_SECRET) ;
         // console.log(`${API_URL}user/${user.id}`),
@@ -22,12 +21,12 @@ export default async function dashboardHandler (req: any, res:any) {
             "Authorization" : `Bearer ${user.tokenKeystone}`,
         };
         const newFetch = await axios({ 
-            url: `${API_URL}user/${user.id}`,
+            url: `${API_URL}contact/many/contacts`,
             method: 'get',
             headers: headers,
+            data: req.body
     
         }).then((res) => {
-            // console.log("-RES2-RES2-RES2", res.data)
             return res.data
         })
         const data = newFetch;

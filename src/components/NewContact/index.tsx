@@ -48,23 +48,38 @@ const NewContact = () => {
 
         try {
             console.log(credentials)
-            const response = await axios.post('/api/talk/createContact', credentials);
+            const nuevoContacto = await axios.post('/api/talk/createContact', credentials);
             // console.log(response.status)
             // console.log(response.data)
 
-            if(!!response.data._id) {
-                // console.log(response.data._id)
-                const query = await axios.post('/api/talk/updateUser', credentials);
-                console.log(query.data)
+            if(!!nuevoContacto.data._id) {
+                const nId = nuevoContacto.data._id
+                const userInfo = await axios.post('/api/talk/dashboard', credentials);
+                const arrayDir = userInfo.data.data.directorio 
+                console.log(arrayDir)
+                if(arrayDir.length === 0 || (arrayDir.length > 0 && !!!arrayDir.includes(nId))) {
+                    const q = await axios.post('/api/talk/manyContacts', arrayDir)
+                    const finalArray = [...q.data]
+                    finalArray.push(nuevoContacto.data)
+                    console.log("FINAL FINAL FINAL:", finalArray)
+                    const fA = await axios.post('/api/talk/updateUser', {
+                        user:userInfo.data.data.user,
+                        password:userInfo.data.data.password,
+                        isAdmin:userInfo.data.data.isAdmin,
+                        directorio:finalArray
+                    })
+                    console.log(fA.data)
+                    if(fA.status === 200) {
+                        //     // console.log("CAMBIANDO DE PAGINA")
+                            router.reload()
+                        } else {
+                            console.log("Requiere nombre y email"); 
+                            
+                        }
+                }
             }
-            // response;
-            // if(response.status === 200) {
-            //     // console.log("CAMBIANDO DE PAGINA")
-            //     router.push('/dashboard')
-            // } else {
-            //     console.log("USUARIO O CONTRASEÑA INCORRECTOS");
-            //     setToastOpen(true);
-            // }
+            
+            
         } catch(err) {
             setToastOpen(true);
             console.error("USUARIO O CONTRASEÑA INCORRECTOS");
