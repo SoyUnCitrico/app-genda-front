@@ -102,7 +102,7 @@ const NewContact = () => {
                             name="name"
                             label="Name"
                             onChange={onType}
-                            sx={{backgroundColor:'white', minWidth:{xs:'320px', sm:'360px', lg:'400px'}}}
+                            sx={{backgroundColor:'white', minWidth:{xs:'240px', sm:'360px', lg:'400px'}}}
                         />
                     </FormControl>
                     <FormControl sx={{margin: '0.5rem 0'}}>
@@ -112,7 +112,7 @@ const NewContact = () => {
                             name="lastName"
                             label="lastName"
                             onChange={onType}
-                            sx={{backgroundColor:'white', minWidth:{xs:'320px', sm:'360px', lg:'400px'}}}
+                            sx={{backgroundColor:'white', minWidth:{xs:'240px', sm:'360px', lg:'400px'}}}
                         />
                     </FormControl>
                     <FormControl required sx={{margin: '0.5rem 0'}}>
@@ -122,7 +122,7 @@ const NewContact = () => {
                             name="email"
                             label="Email"
                             onChange={onType}
-                            sx={{backgroundColor:'white', minWidth:{xs:'320px', sm:'360px', lg:'400px'}}}
+                            sx={{backgroundColor:'white', minWidth:{xs:'240px', sm:'360px', lg:'400px'}}}
                         />
                     </FormControl>
                     <FormControl sx={{margin: '0.5rem 0'}}>
@@ -132,7 +132,7 @@ const NewContact = () => {
                             name="phone"
                             label="Phone"
                             onChange={onType}
-                            sx={{backgroundColor:'white', minWidth:{xs:'320px', sm:'360px', lg:'400px'}}}
+                            sx={{backgroundColor:'white', minWidth:{xs:'240px', sm:'360px', lg:'400px'}}}
                         />
                     </FormControl>
 

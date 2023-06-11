@@ -95,7 +95,7 @@ const Dashboard = (props:DashboardType) => {
                         contactsData.map((contact:any, index:number) => {
                             return(
 
-                                <Grid item xs={4} key={index}>
+                                <Grid item xs={12} md={4} key={index}>
                                     <ContactCard
                                         key={index}
                                         id={contact._id??``}
@@ -119,12 +119,10 @@ const Dashboard = (props:DashboardType) => {
                 }
                 <Box sx={{
                     // background:'red',
-                    
                     position: !creatingUser?'sticky':'relative',
                     bottom:'20px',
                     left:'0',
                     width:'100%',
-                    
                     display:'grid', 
                     placeItems: 'center', 
                     alignSelf:'end',
