@@ -14,13 +14,13 @@ import Toast from '../Toast';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 
-const LoginForm = () => {
+const RegisterForm = () => {
     const router = useRouter();
     // const [showPass, setShowPass] = useState(false);
     const [toastOpen, setToastOpen] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
     const [credentials, setCredentials] = useState({
-        email: '',
+        user:{},
         password: ''
     });
 
@@ -40,30 +40,47 @@ const LoginForm = () => {
     const onType = (e :  any) => {
         // console.log("CREDENTIALS: ", credentials);
         setCredentials({
-            ...credentials,
-            [e.target.name]: e.target.value
+            password: credentials.password,
+            user: {
+                ...credentials.user,
+                [e.target.name]: e.target.value,
+            }
         })
     }
 
+    const onTypePass = (e :  any) => {
+        // console.log("CREDENTIALS: ", credentials);
+        setCredentials({
+            password: e.target.value,
+            user: credentials.user,
+        })
+    }
+
+
     const handleClick = async (e : any) => {
         e.preventDefault();
-
+        // console.log(credentials)
         try {
-            const response = await axios.post('/colaboradores/api/auth/login', credentials);
-            // console.log(response.status)
-            // console.log(response.data)
-            // response;
-            if(response.status === 200) {
+            // console.log("CLICKED:", credentials);
+            const response = await axios.post(`/api/auth/register`, credentials);
+            console.log(response)
+            if(!!response.status && response.status === 200) {
                 // console.log("CAMBIANDO DE PAGINA")
-                router.push('/dashboard')
+                if(response.data === 'Ya existe el usuario'){
+                    setToastOpen(true);
+                } else {
+                    // router.push('/login')
+                    console.log("PUSHING");
+                }
             } else {
-                console.log("USUARIO O CONTRASEÑA INCORRECTOS");
+                console.log("YA EXISTEN LOS DATOS");
                 setToastOpen(true);
             }
-        } catch(err) {
+        } 
+        catch(err) {
             setToastOpen(true);
-            console.error("USUARIO O CONTRASEÑA INCORRECTOS");
-            console.error("ERROR LOG: ", err);
+            console.error("YA EXISTEN LOS DATOS");
+            // console.error("ERROR LOG: ", err);
         }
     }
 
@@ -72,7 +89,7 @@ const LoginForm = () => {
         <Box 
             sx={{marginBottom:{xs:'4rem', md:'0'}}}>
 
-            <Toast isOpen={toastOpen} message={'Email o contraseña incorrectos'} handleClose={handleToastClose}/>
+            <Toast isOpen={toastOpen} message={'Datos ya existen'} handleClose={handleToastClose}/>
             <FormGroup sx={{display:'grid', placeContent:'center'}}>
                 <FormControl required sx={{margin: '1rem 0'}}>
                     <InputLabel htmlFor="name">Name</InputLabel>
@@ -100,7 +117,7 @@ const LoginForm = () => {
                     <OutlinedInput
                         id="password"
                         name="password"
-                        onChange={onType}
+                        onChange={onTypePass}
                         sx={{backgroundColor:'white', minWidth:{xs:'320px', sm:'360px', lg:'400px'}}}
                         type={showPassword ? 'text' : 'password'}
                         endAdornment={
@@ -134,4 +151,4 @@ const LoginForm = () => {
     )
 }   
 
-export default LoginForm;
+export default RegisterForm;

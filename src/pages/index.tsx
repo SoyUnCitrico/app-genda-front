@@ -1,6 +1,8 @@
 import Head from 'next/head'
 // import { Intro } from '@/components';
+import Link from 'next/link';
 import Box from '@mui/material/Box'; 
+import { Typography } from '@mui/material';
 
 export default function Home() {
   return (
@@ -15,6 +17,11 @@ export default function Home() {
             marginTop: {xl:'8rem', lg:'6rem', md:'4rem', xs:'2rem'}
           }}>
         {/* <Intro isButtonSet/> */}
+        <Link href={'/dashboard'} passHref>
+          <Typography variant={'h6'} textAlign={'center'}>
+            Regresa al dashboard o al login
+          </Typography>
+        </Link>
       </Box>
     </>
   )

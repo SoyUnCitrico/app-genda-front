@@ -14,6 +14,7 @@ import Toast from '../Toast';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 
+
 const LoginForm = () => {
     const router = useRouter();
     // const [showPass, setShowPass] = useState(false);
@@ -60,15 +61,18 @@ const LoginForm = () => {
         e.preventDefault();
 
         try {
-            console.log("CLICKED:", credentials);
-            const response = await axios.post('http://127.0.0.1:3000/auth/login', credentials);
-            console.log(response.status)
-            console.log(response.data)
-            // // response;
+            // console.log("CLICKED:", credentials);
+            // const response = await axios.post(`${uri}/auth/login`, credentials);
+            const response = await axios.post(`/api/auth/login`, credentials);
+
             if(!!response.status && response.status === 200) {
                 // console.log("CAMBIANDO DE PAGINA")
-                router.push('/dashboard')
-                console.log("PUSHING");
+                // if(response.data === 'El usuario no se ha encontrado con los datos de tu busqueda'){
+                //     setToastOpen(true);
+                // } else {
+                    router.push('/dashboard')
+                    console.log("PUSHING");
+                // }
             } else {
                 console.log("USUARIO O CONTRASEÑA INCORRECTOS");
                 setToastOpen(true);
@@ -77,7 +81,7 @@ const LoginForm = () => {
         catch(err) {
             setToastOpen(true);
             console.error("USUARIO O CONTRASEÑA INCORRECTOS");
-            console.error("ERROR LOG: ", err);
+            // console.error("ERROR LOG: ", err);
         }
     }
 
